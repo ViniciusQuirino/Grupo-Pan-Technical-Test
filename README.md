@@ -8,7 +8,7 @@
 
 ## 📜Sobre
 
-Este projeto foi desenvolvido com o objetivo de avaliar os conhecimentos em front-end web, utilizando a biblioteca React. O projeto apresenta funcionalidades como cadastro de usuário, login com autenticação, cadastro de novos produtos, edição e exclusão.
+Este projeto foi desenvolvido com o objetivo de avaliar os conhecimentos em front-end web, utilizando a biblioteca React e TypeScript. O projeto apresenta funcionalidades como cadastro de usuário, login com autenticação, cadastro de novos produtos, edição e exclusão.
 
 # Back-end:
 
