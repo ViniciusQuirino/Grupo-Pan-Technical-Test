@@ -10,16 +10,15 @@ import { UserContext, iFormSignup } from "../../contexts/UserContext";
 const Signup = () => {
   const {
     register,
-    handleSubmit,
     setValue,
+    handleSubmit,
     formState: { errors },
-  } = useForm<iFormSignup>({
+  } = useForm({
     resolver: yupResolver(schemaSignup),
   });
 
   const [passwordOne, setPasswordOne] = useState(false);
   const [passwordTwo, setpasswordTwo] = useState(false);
-  const [type, setType] = useState(false);
   const [borderClient, setBorderClient] = useState(false);
   const [borderSeller, setBorderSeller] = useState(false);
 
@@ -63,17 +62,7 @@ const Signup = () => {
           <BsEyeFill onClick={() => setPasswordOne(!passwordOne)} />
           <p>{errors.password?.message}</p>
         </div>
-        <div>
-          <label htmlFor="signup-confirm-password">Confirmar senha</label>
-          <input
-            {...register("confirmPassword")}
-            type={passwordTwo ? "text" : "password"}
-            id="signup-confirm-password"
-            placeholder="Confirme sua senha"
-          />
-          <BsEyeFill onClick={() => setpasswordTwo(!passwordTwo)} />
-          <p>{errors.confirmPassword?.message}</p>
-        </div>
+
         <div>
           <label htmlFor="signup-age">Idade</label>
           <input
@@ -100,8 +89,9 @@ const Signup = () => {
           <div className="type">
             <button
               type="button"
+              {...register("type")}
+              value="cliente"
               onClick={() => {
-                setValue("type", "cliente");
                 setBorderClient(true);
                 setBorderSeller(false);
               }}
@@ -110,8 +100,9 @@ const Signup = () => {
             </button>
             <button
               type="button"
+              {...register("type")}
+              value="vendedor"
               onClick={() => {
-                setValue("type", "vendedor");
                 setBorderSeller(true);
                 setBorderClient(false);
               }}

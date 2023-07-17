@@ -9,11 +9,10 @@ interface iProvidersProps {
 }
 
 export interface iFormSignup {
-  id?: string | number;
+  id?: string;
   name?: string;
   email?: string;
   password?: string;
-  confirmPassword?: string;
   age?: string;
   cpf?: string;
   type?: string;

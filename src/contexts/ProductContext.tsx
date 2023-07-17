@@ -14,7 +14,7 @@ interface iProvidersProps {
 }
 
 export interface iProduct {
-  id?: string | number;
+  id?: string;
   name?: string;
   description?: string;
   voltage?: string;

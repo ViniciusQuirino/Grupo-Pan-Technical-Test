@@ -12,12 +12,6 @@ export const schemaSignup = yup.object({
     .matches(/[A-Z]/, "Deve conter ao menos 1 letra maiúscula")
     .matches(/[a-z]/, "Deve conter ao menos 1 letra minuscula")
     .matches(/.{8,}/, "Deve ter no mínimo 8 digitos"),
-  confirmPassword: yup
-    .string()
-    .oneOf(
-      [yup.ref("password")],
-      "Confirmação de senha deve ser igual a senha"
-    ),
   age: yup.string().required("Necessário preencher o campo"),
   cpf: yup
     .string()

@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-	//baseURL: "http://localhost:3333",
-	baseURL: "http://localhost",
+	baseURL: "https://deploy-ew5c.onrender.com",
 	timeout: 15000,
 });
 
