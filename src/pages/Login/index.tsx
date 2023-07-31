@@ -26,7 +26,7 @@ function Login() {
 
   return (
     <Container>
-      <form onSubmit={handleSubmit(signInUser)}> 
+      <form onSubmit={handleSubmit(signInUser)}>
         <h3>Conecte-se</h3>
         <div className="input">
           <label htmlFor="email">E-mail</label>
@@ -48,6 +48,7 @@ function Login() {
           />
           <BsEyeFill onClick={() => setPassword(!password)} />
           <p>{errors.password?.message}</p>
+          <Link to='/forget-password' className="forget-password">Esqueci minha senha</Link>
         </div>
         <button type="submit">Entrar</button>
         <div className="bottom">

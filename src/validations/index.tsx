@@ -131,3 +131,24 @@ export const schemaEditProduct = yup.object({
     otherwise: yup.string().url().required(),
   }),
 });
+
+export const schemaForgetPasswordEmail = yup.object({
+  email: yup
+    .string()
+    .required("E-mail obrigatório")
+    .email("Preencher o email corretamente"),
+});
+
+export const schemaResetPassword = yup.object({
+  password: yup
+    .string()
+    .required("Senha obrigatória!")
+    .matches(/[A-Z]/, "Deve conter ao menos 1 letra maiúscula")
+    .matches(/[a-z]/, "Deve conter ao menos 1 letra minúscula")
+    .matches(/.{8,}/, "Deve ter no mínimo 8 dígitos"),
+  confirmPassword: yup
+    .string()
+    .required("Confirmação de senha obrigatória!")
+    .oneOf([yup.ref('password')], "A confirmação de senha deve ser igual à senha digitada."),
+});
+
