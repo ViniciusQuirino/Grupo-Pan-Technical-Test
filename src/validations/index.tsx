@@ -12,12 +12,18 @@ export const schemaSignup = yup.object({
     .matches(/[A-Z]/, "Deve conter ao menos 1 letra maiúscula")
     .matches(/[a-z]/, "Deve conter ao menos 1 letra minuscula")
     .matches(/.{8,}/, "Deve ter no mínimo 8 digitos"),
-  age: yup.string().required("Necessário preencher o campo"),
+  age: yup
+    .number()
+    .required("Necessário preencher o campo")
+    .positive("A idade deve ser um número positivo")
+    .integer("A idade deve ser um número inteiro")
+    .min(18, "A idade deve ser maior ou igual a 18")
+    .typeError("A idade deve ser um número"),
   cpf: yup
     .string()
     .length(11, "CPF deve conter 11 digitos numéricos")
-    .matches(/^[0-9]{11}$/),
-  type: yup.string().required("Tipo de conta é obrigatório"),
+    .matches(/^[0-9]{11}$/, "CPF deve conter apenas números"),
+  // type: yup.string().required("Tipo de conta é obrigatório!"),
 });
 
 export const schemaLogin = yup.object({
@@ -149,6 +155,8 @@ export const schemaResetPassword = yup.object({
   confirmPassword: yup
     .string()
     .required("Confirmação de senha obrigatória!")
-    .oneOf([yup.ref('password')], "A confirmação de senha deve ser igual à senha digitada."),
+    .oneOf(
+      [yup.ref("password")],
+      "A confirmação de senha deve ser igual à senha digitada."
+    ),
 });
-

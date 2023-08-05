@@ -2,24 +2,28 @@ import { useContext, useState } from "react";
 import { HeaderStyled } from "./styled";
 import { Link } from "react-router-dom";
 import { ProductContext } from "../../contexts/ProductContext";
-import { toast } from "react-toastify";
+import { UserContext } from "../../contexts/UserContext";
 
 const Header = () => {
   const { setClosedModalCreateProduct } = useContext(ProductContext);
+  const { userData } = useContext(UserContext);
 
   const token = localStorage.getItem("@GrupoPan:token");
 
   return (
     <HeaderStyled>
       <div className="container">
+        <h2>Seja bem vindo {userData.name} !!!</h2>
         <ul>
           {token && (
             <>
-              <li>
-                <button onClick={() => setClosedModalCreateProduct(true)}>
-                  Criar Produto
-                </button>
-              </li>
+              {userData.type == "VENDEDOR" && (
+                <li>
+                  <button onClick={() => setClosedModalCreateProduct(true)}>
+                    Criar Produto
+                  </button>
+                </li>
+              )}
 
               <li>
                 <button
@@ -37,14 +41,10 @@ const Header = () => {
           {!token && (
             <>
               <li>
-                <Link className="link" to="/login">
-                  Login
-                </Link>
+                <Link to="/login">Login</Link>
               </li>
               <li>
-                <Link className="link" to="/signup">
-                  Cadastrar
-                </Link>
+                <Link to="/signup">Cadastrar</Link>
               </li>
             </>
           )}

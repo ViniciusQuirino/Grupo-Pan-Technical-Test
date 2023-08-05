@@ -2,15 +2,20 @@ import React from "react";
 import styled from "styled-components";
 
 export const StyleCard = styled.section`
-  width: 200px;
+  width: 230px;
   margin: 0 auto;
-  border: 1px solid var(--color-primary);
-  border-radius: 5px;
-  padding: 10px;
+  border: 3px solid var(--grey-2);
+  border-radius: 10px;
+  padding: 8px;
   display: flex;
   flex-direction: column;
   gap: 13px;
   background-color: var(--grey-3);
+  margin-bottom: 15px;
+
+  &:hover {
+    border: 3px solid var(--color-primary);
+  }
 
   img {
     width: 100%;

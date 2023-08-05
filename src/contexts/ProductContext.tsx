@@ -39,6 +39,7 @@ interface iProductContext {
   editProduct: (data: iProduct) => Promise<void>;
   editObjProduct: iProduct;
   setEditObjProduct: React.Dispatch<React.SetStateAction<iProduct>>;
+  placeholderCard: boolean;
 }
 
 export interface iFormLogin {
@@ -57,7 +58,7 @@ const ProductProviders = ({ children }: iProvidersProps) => {
     useState<boolean>(false);
   const [idProduct, setIdProduct] = useState<string>("");
   const [editObjProduct, setEditObjProduct] = useState<iProduct>({});
-
+  const [placeholderCard, setPlaceholderCard] = useState<boolean>(false);
   const [products, setProducts] = useState<iProduct[]>([]);
 
   const { setGlobalLoading } = useContext(UserContext);
@@ -84,7 +85,6 @@ const ProductProviders = ({ children }: iProvidersProps) => {
 
   useEffect(() => {
     async function listAllProducts(): Promise<void> {
-      setGlobalLoading(true);
       try {
         const response = await api.get("/products");
         function removeBackslashes(array) {
@@ -93,7 +93,7 @@ const ProductProviders = ({ children }: iProvidersProps) => {
             return product;
           });
         }
-
+        setPlaceholderCard(true);
         const productsWithoutBackslashes = removeBackslashes(response.data);
 
         setProducts(productsWithoutBackslashes);
@@ -101,8 +101,6 @@ const ProductProviders = ({ children }: iProvidersProps) => {
         toast.error(error.response.data.errors, {
           theme: "dark",
         });
-      } finally {
-        setGlobalLoading(false);
       }
     }
     listAllProducts();
@@ -173,6 +171,7 @@ const ProductProviders = ({ children }: iProvidersProps) => {
         editProduct,
         editObjProduct,
         setEditObjProduct,
+        placeholderCard,
       }}
     >
       {children}

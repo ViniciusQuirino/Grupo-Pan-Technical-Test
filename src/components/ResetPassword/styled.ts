@@ -1,44 +1,44 @@
 import styled from "styled-components";
 
 export const StyledResetPassword = styled.div`
-  width: 90%;
-  background-color: var(--grey-3);
-  padding: 2rem 0;
-  border-radius: 5px;
+  width: 100%;
   max-width: 400px;
   margin: 0 auto;
-  margin-top: 100px;
-
-  form {
-    width: 90%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
+  margin-top: 80px;
 
   h3 {
-    color: var(--grey-0);
     font: var(--font-title-2);
+    color: var(--grey-0);
     text-align: center;
   }
 
-  label {
-    color: var(--grey-0);
-    font: var(--font-text-1);
+  form {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--grey-3);
+    padding: 2rem 1rem;
+    gap: 1.2rem;
+    margin-bottom: 30px;
+    border-radius: 5px;
   }
 
-  .input {
+  form div {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
+    gap: 0.5rem;
     position: relative;
   }
-  
-  .input input {
+
+  div p {
+    color: var(--negative);
+    font: var(--font-text-1);
+  }
+
+  form div input {
     width: 100%;
     height: 40px;
+    font-size: 16px;
     border-radius: 5px;
     background: var(--grey-2);
     border: none;
@@ -47,30 +47,36 @@ export const StyledResetPassword = styled.div`
     color: var(--grey-0);
     font: var(--font-text-3);
   }
-  div p {
-    color: var(--negative);
-    font: var(--font-text-1);
-  }
 
   input:focus {
     outline: 2px solid var(--color-primary);
   }
 
-  button {
-    height: 40px;
-    background-color: var(--color-primary);
+  input::placeholder {
+    color: var(--grey-1);
+  }
+
+  label {
     color: var(--grey-0);
-    border: none;
-    border-radius: 5px;
-    width: 100%;
     font: var(--font-text-1);
   }
 
-  button:hover {
-    background-color: rgb(134, 142, 150, 0.7);
+  div svg {
+    position: absolute;
+    right: 0.8rem;
+    top: 37px;
+    cursor: pointer;
+    color: var(--grey-1);
+    cursor: pointer;
   }
 
-  input::placeholder {
-    color: var(--grey-1);
+  form button {
+    background: var(--color-primary);
+    color: var(--grey-0);
+    font: var(--font-text-1);
+    border: none;
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
   }
 `;

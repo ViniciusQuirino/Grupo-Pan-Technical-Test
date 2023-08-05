@@ -1,5 +1,5 @@
 import React, { createContext, useState, ReactNode } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import api from "../services/api";
@@ -31,6 +31,7 @@ interface iUserContext {
   verifyEmail: (tokenEmail: string) => void;
   forgetPasswordEmail: (data: iFormSignup) => void;
   resetPassword: (data, token) => Promise<void>;
+  userData: iFormSignup;
 }
 
 export interface iFormLogin {
@@ -44,29 +45,54 @@ const Providers = ({ children }: iProvidersProps) => {
   const [globalLoading, setGlobalLoading] = useState<boolean>(false);
   const [checkingVerifiedEmailBoolean, setCheckingVerifiedEmailBoolean] =
     useState<boolean>(false);
-
+  const [verify, setVerify] = useState(true);
+  const [userData, setUserData] = useState<iFormSignup>({} as iFormSignup);
   const userid = localStorage.getItem("@GrupoPan:userid");
   const token = localStorage.getItem("@GrupoPan:token");
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const autoLogin = async () => {
+      if (token) {
+        setGlobalLoading(true);
+        try {
+          api.defaults.headers.common.authorization = `Bearer ${token}`;
+
+          const response = await api.get(`/auth/user`);
+
+          setUserData(response.data);
+
+          navigate("/");
+        } catch (error) {
+          localStorage.removeItem("@GrupoPan:token");
+          localStorage.removeItem("@GrupoPan:userid");
+          navigate("/");
+        } finally {
+          setGlobalLoading(false);
+        }
+      }
+    };
+    autoLogin();
+  }, []);
+
   useEffect(() => {
     if (userid && token) {
       checkingVerifiedEmail();
     }
 
     async function checkingVerifiedEmail(): Promise<void> {
-      setGlobalLoading(true);
+      // setGlobalLoading(true);
       try {
         api.defaults.headers.common.authorization = `Bearer ${token}`;
-        const response = await api.get(`/auth/user/${userid}`);
+        const response = await api.get(`/auth/user`);
 
-        if (response.data.email_verified == 1) {
+        if (response.data.email_verified) {
           setCheckingVerifiedEmailBoolean(true);
         } else {
           setCheckingVerifiedEmailBoolean(false);
         }
       } catch (error) {
-        console.log(error.response.data.errors);
         if (error.response.data.errors == "Token expirado") {
           localStorage.removeItem("@GrupoPan:userid");
           localStorage.removeItem("@GrupoPan:token");
@@ -75,31 +101,33 @@ const Providers = ({ children }: iProvidersProps) => {
           theme: "dark",
           toastId: 1,
         });
-      } finally {
-        setGlobalLoading(false);
       }
     }
   }, []);
 
   async function verifyEmail(tokenEmail): Promise<void> {
-    try {
-      const response = await api.get(`/verify-email/${tokenEmail}`);
+    if (verify) {
+      setVerify(false);
+      try {
+        const response = await api.get(`/verify-email/${tokenEmail}`);
 
-      if (response.data.email_verified) {
-        setCheckingVerifiedEmailBoolean(true);
-      } else {
-        setCheckingVerifiedEmailBoolean(false);
+        if (response.data.email_verified) {
+          setCheckingVerifiedEmailBoolean(true);
+        } else {
+          setCheckingVerifiedEmailBoolean(false);
+        }
+
+        toast.success("Email verificado com sucesso!", {
+          theme: "dark",
+          autoClose: 2000,
+          toastId: 1,
+        });
+      } catch (error) {
+        toast.error(error.response.data.errors, {
+          theme: "dark",
+          toastId: 1,
+        });
       }
-
-      toast.success("Email verificado com sucesso!", {
-        theme: "dark",
-        autoClose: 2000,
-      });
-    } catch (error) {
-      toast.error(error.response.data.errors, {
-        theme: "dark",
-        toastId: 1,
-      });
     }
   }
 
@@ -111,6 +139,7 @@ const Providers = ({ children }: iProvidersProps) => {
         theme: "dark",
         autoClose: 3000,
       });
+      navigate("/");
     } catch (error) {
       toast.error(error.response.data.errors, {
         theme: "dark",
@@ -145,14 +174,11 @@ const Providers = ({ children }: iProvidersProps) => {
     try {
       const response = await api.post("/login", data);
       navigate(`/`);
-
+      setUserData(response.data.user);
       localStorage.setItem("@GrupoPan:token", response.data.token);
       localStorage.setItem("@GrupoPan:userid", response.data.user.id);
 
-      api.defaults.headers.common.authorization = `Bearer ${response.data.token}`;
-      const responseTwo = await api.get(`/auth/user/${response.data.user.id}`);
-
-      if (responseTwo.data.email_verified == 1) {
+      if (response.data.user.email_verified) {
         setCheckingVerifiedEmailBoolean(true);
       } else {
         setCheckingVerifiedEmailBoolean(false);
@@ -161,8 +187,9 @@ const Providers = ({ children }: iProvidersProps) => {
         theme: "dark",
       });
     } catch (error) {
-      toast.error("Email ou senha invalido!", {
+      toast.error(error.response.data.errors, {
         theme: "dark",
+        toastId: 1,
       });
     } finally {
       setGlobalLoading(false);
@@ -170,16 +197,18 @@ const Providers = ({ children }: iProvidersProps) => {
   }
 
   const registerUser = async (data: iFormSignup) => {
+    console.log(data);
     try {
       await api.post("/users", data);
       navigate("/login");
       toast.success("Usuário cadastrado com sucesso!", {
         theme: "dark",
+        toastId: 1,
       });
     } catch (error) {
+      console.log(error.response.data.errors);
       toast.error(error.response.data.errors, {
         theme: "dark",
-        autoClose: 6000,
         toastId: 1,
       });
     }
@@ -197,6 +226,7 @@ const Providers = ({ children }: iProvidersProps) => {
         verifyEmail,
         forgetPasswordEmail,
         resetPassword,
+        userData,
       }}
     >
       {children}

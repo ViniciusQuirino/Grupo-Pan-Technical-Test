@@ -7,8 +7,9 @@ import Providers from "./contexts/UserContext";
 import GlobalLoading from "./components/GlobalLoading";
 import ProductProviders from "./contexts/ProductContext";
 
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <BrowserRouter>
       <Providers>
         <ProductProviders>
@@ -19,5 +20,5 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         </ProductProviders>
       </Providers>
     </BrowserRouter>
-  </React.StrictMode>
+  // </React.StrictMode>
 );

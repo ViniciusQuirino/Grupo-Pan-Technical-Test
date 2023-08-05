@@ -1,12 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { StyleCard } from "./styled";
 import { RiEdit2Line } from "react-icons/ri";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { ProductContext } from "../../contexts/ProductContext";
+import img from "../../../public/placeholder.svg";
 
-const Card = (product) => {
+const CardComponent = (product) => {
   const token = localStorage.getItem("@GrupoPan:userid");
-
+  const [imageError, setImageError] = useState(false);
   const {
     setIdProduct,
     closedModalDeleteProduct,
@@ -15,10 +16,23 @@ const Card = (product) => {
     setEditObjProduct,
   } = useContext(ProductContext);
 
+  const handleImageError = () => {
+    setImageError(true);
+  };
+
+  const priceInBRL = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  }).format(product.product.price);
+
   return (
     <StyleCard>
       <div>
-        <img src={product.product.image} alt="Imagem do produto" />
+        <img
+          src={imageError ? img : product.product.image}
+          alt="Imagem do produto"
+          onError={handleImageError}
+        />
       </div>
       <h3>{product.product.name}</h3>
       <p className="description">{product.product.description}</p>
@@ -27,7 +41,8 @@ const Card = (product) => {
         <p>{product.product.voltage}</p>
       </div>
       <div className="bottom-card">
-        <p>R$ {product.product.price}</p>
+        <p>R$ {priceInBRL}</p>
+
         <div>
           {token == product.product.user_id && (
             <>
@@ -51,4 +66,4 @@ const Card = (product) => {
   );
 };
 
-export default Card;
+export default CardComponent;

@@ -5,15 +5,32 @@ export const HeaderStyled = styled.section`
   height: 100px;
   background-color: #7259c1;
 
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 90%;
+  }
+
+  h2 {
+    font: var(--font-title-1);
+    color: var(--grey-0);
+    /* width:300px; */
+    text-align: center;
+  }
+
   ul {
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 35px;
     width: 90%;
     margin: 0 auto;
     height: 100px;
-    justify-content: space-evenly;
+    justify-content: right;
     align-items: center;
+    max-width: 1200px;
   }
 
   a {
@@ -41,11 +58,33 @@ export const HeaderStyled = styled.section`
     background-color: var(--grey-4);
   }
 
-  @media (max-width: 428px) {
-    height: 130px;
+  @media (max-width: 768px) {
+
+    h2 {
+      font-size:20px;
+    }
+     ul{
+      gap:10px;
+     }
+  }
+
+  @media (max-width: 475px) {
+    height: 150px;
+    display:flex;
+    align-items:center;
+
+    h2 {
+      font-size:22px;
+      margin: 0 6px;
+    }
 
     ul {
       height: 120px;
+    }
+
+    button{
+      height: 2.7rem;
+      font-size:16px;
     }
   }
 `;

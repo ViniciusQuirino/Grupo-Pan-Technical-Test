@@ -1,16 +1,14 @@
-import { useState, ReactNode, useContext } from "react";
+import { useState, useContext } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Link } from "react-router-dom";
 import { BsEyeFill } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 import { General } from "./styled";
 import { schemaSignup } from "../../validations";
-import { UserContext, iFormSignup } from "../../contexts/UserContext";
+import { UserContext } from "../../contexts/UserContext";
 
 const Signup = () => {
   const {
     register,
-    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -18,15 +16,28 @@ const Signup = () => {
   });
 
   const [passwordOne, setPasswordOne] = useState(false);
-  const [passwordTwo, setpasswordTwo] = useState(false);
   const [borderClient, setBorderClient] = useState(false);
   const [borderSeller, setBorderSeller] = useState(false);
 
+  const [type, setType] = useState<boolean | string>("");
+  const [typeError, setTypeError] = useState<boolean>(false);
+
   const { registerUser } = useContext(UserContext);
+
+  function validatedAccountType(data) {
+    setTypeError(true);
+    if (type) {
+      data.type = "vendedor";
+      registerUser(data);
+    } else if (!type) {
+      data.type = "cliente";
+      registerUser(data);
+    }
+  }
 
   return (
     <General $borderClient={borderClient} $borderSeller={borderSeller}>
-      <form onSubmit={handleSubmit(registerUser)}>
+      <form onSubmit={handleSubmit(validatedAccountType)}>
         <div className="top">
           <h3>Crie sua conta</h3>
           <span>Rapido e grátis, vamos nessa!</span>
@@ -89,9 +100,9 @@ const Signup = () => {
           <div className="type">
             <button
               type="button"
-              {...register("type")}
-              value="cliente"
               onClick={() => {
+                setType(false);
+                setTypeError(false);
                 setBorderClient(true);
                 setBorderSeller(false);
               }}
@@ -100,9 +111,9 @@ const Signup = () => {
             </button>
             <button
               type="button"
-              {...register("type")}
-              value="vendedor"
               onClick={() => {
+                setType(true);
+                setTypeError(false);
                 setBorderSeller(true);
                 setBorderClient(false);
               }}
@@ -110,10 +121,14 @@ const Signup = () => {
               VENDEDOR
             </button>
           </div>
-          <p>{errors.type?.message}</p>
+          {type == "" && typeError && <p>Tipo de conta é obrigatório</p>}
         </div>
 
-        <button type="submit" className="register">
+        <button
+          onClick={() => setTypeError(true)}
+          type="submit"
+          className="register"
+        >
           CADASTRAR
         </button>
       </form>
