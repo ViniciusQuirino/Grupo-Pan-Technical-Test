@@ -68,4 +68,8 @@ export const StyleCard = styled.section`
     scale: 1.2;
     cursor: pointer;
   }
+
+  @media (max-width: 768px) {
+   min-width:230px;
+  }
 `;

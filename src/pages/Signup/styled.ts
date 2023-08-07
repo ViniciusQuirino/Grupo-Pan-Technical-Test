@@ -110,4 +110,8 @@ export const General = styled.div<{
   .register:hover {
     background-color: rgb(134, 142, 150, 0.7);
   }
+
+  @media(max-width: 425px){
+    width:90%;
+  }
 `;

@@ -41,6 +41,9 @@ const Header = () => {
           {!token && (
             <>
               <li>
+                <Link to="/">Dashboard</Link>
+              </li>
+              <li>
                 <Link to="/login">Login</Link>
               </li>
               <li>

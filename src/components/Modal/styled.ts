@@ -14,8 +14,8 @@ export const StyledModal = styled.div`
     margin: 0 auto;
     background-color: var(--fixed-white);
     border-radius: 5px;
-    padding: 0 1.5rem 1rem 1.5rem;
-    width: 95%;
+   
+    width: 100%;
     max-width: 800px;
     gap: 2rem;
   }

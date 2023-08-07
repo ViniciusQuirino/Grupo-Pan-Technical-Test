@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Modal from "../Modal";
 import { CreateProductStyled } from "./styled";
 import { yupResolver } from "@hookform/resolvers/yup";

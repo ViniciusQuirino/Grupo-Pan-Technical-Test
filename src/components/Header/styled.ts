@@ -33,16 +33,6 @@ export const HeaderStyled = styled.section`
     max-width: 1200px;
   }
 
-  a {
-    color: var(--grey-0);
-    background-color: var(--grey-2);
-    border: none;
-    font-size: 20px;
-    border-radius: 5px;
-    padding: 0.56rem 1rem;
-    text-decoration: none;
-  }
-
   button {
     color: var(--grey-0);
     background-color: var(--grey-2);
@@ -53,28 +43,42 @@ export const HeaderStyled = styled.section`
     padding: 0px 15px;
   }
 
+  a {
+    color: var(--grey-0);
+    background-color: var(--grey-2);
+    border: none;
+    font-size: 20px;
+    border-radius: 5px;
+    padding: 0.56rem 1rem;
+    text-decoration: none;
+  }
+
   a:hover,
   button:hover {
     background-color: var(--grey-4);
   }
 
   @media (max-width: 768px) {
-
     h2 {
-      font-size:20px;
+      font-size: 20px;
     }
-     ul{
-      gap:10px;
-     }
+    ul {
+      gap: 10px;
+    }
+
+    a {
+      height: 2.9rem;
+      font-size: 16px;
+    }
   }
 
   @media (max-width: 475px) {
     height: 150px;
-    display:flex;
-    align-items:center;
+    display: flex;
+    align-items: center;
 
     h2 {
-      font-size:22px;
+      font-size: 23px;
       margin: 0 6px;
     }
 
@@ -82,9 +86,15 @@ export const HeaderStyled = styled.section`
       height: 120px;
     }
 
-    button{
+    a {
       height: 2.7rem;
-      font-size:16px;
+      font-size: 16px;
+    }
+  }
+
+  @media (max-width: 425px) {
+    a {
+      height: 16px;
     }
   }
 `;

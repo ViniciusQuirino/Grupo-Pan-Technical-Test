@@ -7,6 +7,12 @@ export const DashboardStyled = styled.div`
   gap: 5px;
   flex-wrap: wrap;
   margin: 10px auto;
+
+  @media (max-width: 768px) {
+    flex-wrap: nowrap;
+    overflow: auto;
+    margin-left: 10px;
+  }
 `;
 
 export const DivStyled = styled.div`

@@ -1,13 +1,12 @@
 import styled from "styled-components";
 
 const Container = styled.div`
-  width: 90%;
+  width: 100%;
   background-color: var(--grey-3);
   padding: 2rem 0;
   border-radius: 5px;
   max-width: 400px;
-  margin: 0 auto;
-  margin-top: 100px;
+  margin: 30px auto;
 
   form {
     width: 90%;
@@ -118,6 +117,10 @@ const Container = styled.div`
 
   .register:hover {
     background-color: rgb(134, 142, 150, 0.7);
+  }
+
+  @media (max-width: 425px) {
+    width: 90%;
   }
 `;
 

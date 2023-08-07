@@ -1,19 +1,19 @@
 import styled from "styled-components";
 
 export const CreateProductStyled = styled.section`
-  width: 90%;
-  margin: 0 auto;
+  width: 100%;
+  margin:0 auto;
   margin-top: 10px;
   display: flex;
   flex-direction: column;
   gap: 25px;
   padding: 20px 0;
   background-color: var(--grey-3);
-  border-radius: 10px;
-  position:relative;
+  border-radius: 5px;
+  position: relative;
 
   h1 {
-    margin:15px 0 20px 25px;
+    margin: 15px 0 20px 25px;
     font: var(--font-title-2);
     color: var(--grey-0);
   }
@@ -99,10 +99,10 @@ export const CreateProductStyled = styled.section`
     color: var(--negative);
   }
 
-  @media (min-width: 762px) {
+  @media (min-width: 768px) {
     width: 500px;
     gap: 0px;
-    position:relative;
+    position: relative;
 
     .closed {
       position: absolute;

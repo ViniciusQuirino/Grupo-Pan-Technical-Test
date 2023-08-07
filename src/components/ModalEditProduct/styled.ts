@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const EditProductStyled = styled.section`
-  width: 90%;
+  width: 100%;
   margin: 0 auto;
   margin-top: 10px;
   display: flex;

@@ -12,7 +12,9 @@ import Card from "react-bootstrap/Card";
 import Placeholder from "react-bootstrap/Placeholder";
 import placeholder from "../../../public/placeholder.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
 const Dashboard = () => {
   const {
     closedModalCreateProduct,
@@ -23,8 +25,10 @@ const Dashboard = () => {
   } = useContext(ProductContext);
 
   const { checkingVerifiedEmailBoolean } = useContext(UserContext);
+
   const [mostrarComponente, setMostrarComponente] = useState(false);
-  console.log(checkingVerifiedEmailBoolean)
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
   const tokenLocalStorage = localStorage.getItem("@GrupoPan:token");
 
   useEffect(() => {
@@ -35,6 +39,19 @@ const Dashboard = () => {
     return () => clearTimeout(timeoutId);
   }, []);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Limpe o evento de redimensionamento ao desmontar o componente
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <>
       <Header />
@@ -43,11 +60,11 @@ const Dashboard = () => {
         tokenLocalStorage &&
         mostrarComponente && <VerifyEmail />}
 
-      {placeholderCard && (
+      {closedModalCreateProduct && <ModalCreateProduct />}
+      {closedModalDeleteProduct && <ModalDeleteProduct />}
+      {closedModalEditProduct && <ModalEditProduct />}
+      {placeholderCard && windowWidth > 768 && (
         <DivStyled>
-          {closedModalDeleteProduct && <ModalDeleteProduct />}
-          {closedModalCreateProduct && <ModalCreateProduct />}
-          {closedModalEditProduct && <ModalEditProduct />}
           {!closedModalDeleteProduct &&
             !closedModalCreateProduct &&
             !closedModalEditProduct && (
@@ -55,6 +72,39 @@ const Dashboard = () => {
                 {products.map((elem, index) => (
                   <CardComponent key={index} product={elem} />
                 ))}
+              </DashboardStyled>
+            )}
+        </DivStyled>
+      )}
+
+      {placeholderCard && windowWidth <= 768 && (
+        <DivStyled>
+          {!closedModalDeleteProduct &&
+            !closedModalCreateProduct &&
+            !closedModalEditProduct && (
+              <DashboardStyled>
+                {products
+                  .slice(0, Math.ceil(products.length / 2))
+                  .map((elem, index) => (
+                    <CardComponent key={index} product={elem} />
+                  ))}
+              </DashboardStyled>
+            )}
+        </DivStyled>
+      )}
+
+      {placeholderCard && windowWidth <= 768 && (
+        <DivStyled>
+         
+          {!closedModalDeleteProduct &&
+            !closedModalCreateProduct &&
+            !closedModalEditProduct && (
+              <DashboardStyled>
+                {products
+                  .slice(Math.ceil(products.length / 2), products.length)
+                  .map((elem, index) => (
+                    <CardComponent key={index} product={elem} />
+                  ))}
               </DashboardStyled>
             )}
         </DivStyled>

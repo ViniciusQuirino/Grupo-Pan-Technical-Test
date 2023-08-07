@@ -79,4 +79,8 @@ export const StyledResetPassword = styled.div`
     height: 40px;
     border-radius: 5px;
   }
+
+  @media (max-width: 425px) {
+    width: 90%;
+  }
 `;

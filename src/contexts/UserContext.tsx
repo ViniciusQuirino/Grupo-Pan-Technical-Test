@@ -1,9 +1,8 @@
 import React, { createContext, useState, ReactNode } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import api from "../services/api";
-import { BsSignTurnLeftFill } from "react-icons/bs";
 
 interface iProvidersProps {
   children: ReactNode;
@@ -45,6 +44,7 @@ const Providers = ({ children }: iProvidersProps) => {
   const [globalLoading, setGlobalLoading] = useState<boolean>(false);
   const [checkingVerifiedEmailBoolean, setCheckingVerifiedEmailBoolean] =
     useState<boolean>(false);
+
   const [verify, setVerify] = useState(true);
   const [userData, setUserData] = useState<iFormSignup>({} as iFormSignup);
   const userid = localStorage.getItem("@GrupoPan:userid");
